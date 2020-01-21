@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Words</string>
+    <string name="TextDefault">Text</string>
+    <string name="ImageDefault">Image</string>
+    <string name="SwitchDefault">normal模式</string>
+    <string name="ButtonDefault">Button</string>
+    <string name="button_insert">insert</string>
+    <string name="button_delete">delete</string>
+</resources>
