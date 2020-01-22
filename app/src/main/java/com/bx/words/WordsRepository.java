@@ -25,6 +25,10 @@ class WordsRepository {
     LiveData<List<Words>> getAllWordsLive() {
         return allWordsLive;
     }
+    //模糊搜索
+    LiveData<List<Words>> findWordsWithPatten(String patten){
+        return wordsDao.findWordsWithpatten("%"+patten+"%");    //模糊搜索需要在前后加上 % 这样才不会匹配整个字段
+    }
 
     void insertWords(Words... words) {
         new InsertAsyncTask(wordsDao).execute(words);

@@ -27,4 +27,7 @@ public interface WordsDao {
     @Query("SELECT * FROM Words ORDER BY ID DESC")
     LiveData<List<Words>> getAllWordsLiveData();
 
+    @Query("SELECT * FROM Words WHERE english_words || chinese_meaning LIKE :patten ORDER BY ID")
+    LiveData<List<Words>>findWordsWithpatten(String patten);
+
 }
