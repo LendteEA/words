@@ -36,17 +36,14 @@ public class Words {
         return englishWords;
     }
 
-    public void setEnglishWords(String englishWords) {
-        this.englishWords = englishWords;
-    }
+//    public void setEnglishWords(String englishWords) {
+//        this.englishWords = englishWords;
+//    }
 
     String getChineseMeaning() {
         return chineseMeaning;
     }
 
-    public void setChineseMeaning(String chineseMeaning) {
-        this.chineseMeaning = chineseMeaning;
-    }
 
     boolean isChineseInvisiable() {
         return chineseInvisiable;

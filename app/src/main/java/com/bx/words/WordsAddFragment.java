@@ -53,6 +53,7 @@ public class WordsAddFragment extends Fragment {
         //自动显示键盘，光标点位到EnglisheditText
         editTextEnglish.requestFocus(); //获取键盘焦点
         InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
         imm.showSoftInput(editTextEnglish, 0);
 
         //输入监听
@@ -87,6 +88,7 @@ public class WordsAddFragment extends Fragment {
                 navController.navigateUp();
                 //隐藏键盘
                 InputMethodManager imm = (InputMethodManager) requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert imm != null;
                 imm.hideSoftInputFromWindow(v.getWindowToken(),0);
             }
         });

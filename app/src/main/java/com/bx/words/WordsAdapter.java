@@ -10,17 +10,29 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
+import androidx.recyclerview.widget.ListAdapter;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.MyViewHolder> {
-    private List<Words> allwords = new ArrayList<>();
+public class WordsAdapter extends ListAdapter<Words, WordsAdapter.MyViewHolder> {
     private WordsViewModel wordsViewModel;
     private boolean userView;
 
     WordsAdapter(boolean userView, WordsViewModel wordsViewModel) {
+        //自动比较列表区别
+        super(new DiffUtil.ItemCallback<Words>() {
+            @Override   //比较列表 数量 是否相同
+            public boolean areItemsTheSame(@NonNull Words oldItem, @NonNull Words newItem) {
+                return oldItem.getId() == newItem.getId();
+            }
+
+            @Override   //比较列表 内容 是否相同
+            public boolean areContentsTheSame(@NonNull Words oldItem, @NonNull Words newItem) {
+                return (oldItem.getEnglishWords().equals(newItem.getEnglishWords())
+                        && oldItem.getChineseMeaning().equals(newItem.getChineseMeaning())
+                        && oldItem.isChineseInvisiable() == newItem.isChineseInvisiable());
+            }
+        });
         this.userView = userView;
         this.wordsViewModel = wordsViewModel;
     }
@@ -40,9 +52,7 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.MyViewHolder
     }
 
     //读取数据
-    void setAllwords(List<Words> allwords) {
-        this.allwords = allwords;
-    }
+
 
     //创建View时判断Switch状态 再决定返回那个View
     @NonNull
@@ -58,9 +68,15 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.MyViewHolder
         return new MyViewHolder(itemView);
     }
 
+    @Override   //防止序列号bug 当列表出现在屏幕上时也为其附一个值
+    public void onViewAttachedToWindow(@NonNull MyViewHolder holder) {
+        super.onViewAttachedToWindow(holder);
+        holder.textViewid.setText(String.valueOf(holder.getAdapterPosition() + 1));
+    }
+
     @Override
     public void onBindViewHolder(@NonNull final MyViewHolder holder, int position) {
-        final Words words = allwords.get(position);
+        final Words words = getItem(position);
         holder.textViewid.setText(String.valueOf(position + 1));
         holder.textViewEnglish.setText(words.getEnglishWords());
         holder.textViewChinese.setText(words.getChineseMeaning());
@@ -101,8 +117,4 @@ public class WordsAdapter extends RecyclerView.Adapter<WordsAdapter.MyViewHolder
         });
     }
 
-    @Override
-    public int getItemCount() {
-        return allwords.size();
-    }
 }
